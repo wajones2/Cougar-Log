@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+source venv/bin/activate
+cd app
+python xapp.py
