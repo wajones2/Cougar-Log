@@ -1,15 +1,15 @@
 import sys, time
-from mainp1 import *
-from widgetp2 import *
-from addstudentp2 import *
-from newstudentdb import *
-from tutorinfop2 import *
-from studentinfop3 import *
+from mainp1v2 import *
+from widgetp2v2 import *
+from addstudentp2v2 import *
+from newstudentdbv2 import *
+from tutorinfop2v2 import *
+from studentinfop3v2 import *
 from loghoursp4 import *
 from xtimelog import *
 from PyQt5.QtGui import QIcon
 from xclip import *
-from notesp5 import *
+from notesp5v2 import *                 #   [IN PROGRESS]
 
 def strfdate():
     return time.strftime('%m/%d/%Y')
@@ -46,34 +46,28 @@ class Page1(Ui_MainWindow):
         app.exit()    # Use this when finished editing
 
     def info_check(self):                           # [COMPLETE] # firstrun
-        if self.lineEdit_0.text() != '' and self.lineEdit_1.text() != '' and self.lineEdit_2.text() != '' and self.lineEdit_3.text() != '' and self.lineEdit_4.text() != '':
-            if len(self.lineEdit_0.text()) == 7:
-                if self.lineEdit_0.text().isnumeric():
-                    if self.lineEdit_1.text().isalpha() and self.lineEdit_2.text().isalpha():
-                        if self.lineEdit_4.text().isnumeric():
-                            if len(self.lineEdit_4.text()) == 4:
-                                cursor.execute("""insert into tutor ('myUH','first_name','last_name','discord_handle','discord_tag','date','time')
-                                values ('%s','%s','%s','%s','%s','%s','%s') """ % (self.lineEdit_0.text(), self.lineEdit_1.text(), self.lineEdit_2.text(), self.lineEdit_3.text(), self.lineEdit_4.text(), strfdate(), strftime()))
-                                con.commit()
-                                
-                                cursor.execute("""
-                                    UPDATE firstrun
-                                    SET marker = '1'
-                                    WHERE marker = '0'
-                                """)
-                                con.commit()
-                                self.page2()
+        if self.lineEdit_1.text() != '' and self.lineEdit_2.text() != '' and self.lineEdit_3.text() != '' and self.lineEdit_4.text() != '':
+            if self.lineEdit_1.text().isalpha() and self.lineEdit_2.text().isalpha():
+                if self.lineEdit_4.text().isnumeric():
+                    if len(self.lineEdit_4.text()) == 4:
+                        cursor.execute("""insert into tutor ('first_name','last_name','discord_handle','discord_tag','date','time')
+                        values ('%s','%s','%s','%s','%s','%s') """ % (self.lineEdit_1.text(), self.lineEdit_2.text(), self.lineEdit_3.text(), self.lineEdit_4.text(), strfdate(), strftime()))
+                        con.commit()
+                        
+                        cursor.execute("""
+                            UPDATE firstrun
+                            SET marker = '1'
+                            WHERE marker = '0'
+                        """)
+                        con.commit()
+                        self.page2()
 
-                            else:
-                                self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be 4 digits.</span></p></body></html>")
-                        else:
-                            self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be numeric.</span></p></body></html>")
                     else:
-                        self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Name must be alphabetical.</span></p></body></html>")
+                        self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be 4 digits.</span></p></body></html>")
                 else:
-                    self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be numeric.</span></p></body></html>")
+                    self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be numeric.</span></p></body></html>")
             else:
-                self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be 7 digits.</span></p></body></html>")
+                self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Name must be alphabetical.</span></p></body></html>")
         else:
             self.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">All fields required.</span></p></body></html>")
 
@@ -83,13 +77,11 @@ class Page1(Ui_MainWindow):
         """)
         self.tutor = cursor.fetchall()
 
-        self.myUH = self.tutor[0][1]
-        self.first_name = self.tutor[0][2]
-        self.last_name = self.tutor[0][3]
-        self.discord_handle = self.tutor[0][4]
-        self.discord_tag = self.tutor[0][5]
+        self.first_name = self.tutor[0][1]
+        self.last_name = self.tutor[0][2]
+        self.discord_handle = self.tutor[0][3]
+        self.discord_tag = self.tutor[0][4]
 
-        self.ui_p2.tutormyUHID.setText(self.myUH)
         self.ui_p2.tutorFirstName.setText(self.first_name)
         self.ui_p2.tutorLastName.setText(self.last_name)
         self.ui_p2.tutorDiscordHandle.setText(self.discord_handle)
@@ -100,7 +92,7 @@ class Page1(Ui_MainWindow):
         for x in range(self.studentNum):
             if datawrite.student_check[x][1] not in self.idList:
                 self.idList.append(datawrite.student_check[x][1])
-                self.ui_p2.listWidget.addItem(f"{datawrite.student_check[x][1]} - {datawrite.student_check[x][4]}")
+                self.ui_p2.listWidget.addItem(f"{datawrite.student_check[x][1]}")   # Should now be Discord Handle + # + Discord Tag
 
     def page2(self):                                # [COMPLETE]
 
@@ -151,54 +143,46 @@ class Page1(Ui_MainWindow):
 
     def add_student(self):                          # [COMPLETE]
 
-        new_student_id = self.ui_p2_1.data_browser_2.text()
+        # new_student_id = self.ui_p2_1.data_browser_2.text()     # Why is this the only defined data browser variable?
+        new_student_id = self.ui_p2_1.data_browser_5.text() + '#' + self.ui_p2_1.data_browser_6.text()
 
-        if new_student_id not in [str(ID[1]) for ID in datawrite.student_check]:    # student_check imported from newstudentdb
-            if len(new_student_id) == 7:                                           
-                if new_student_id.isnumeric():
-                    if self.ui_p2_1.data_browser_5.text() != '':
-                        if self.ui_p2_1.data_browser_6.text() != '':
+        if new_student_id not in [str(ID[1]) for ID in datawrite.student_check]:    # student_check imported from newstudentdb                                           
+            if self.ui_p2_1.data_browser_5.text() != '':
+                if self.ui_p2_1.data_browser_6.text() != '':
+                    if self.ui_p2_1.data_browser_6.text().isnumeric():
+                        if len(self.ui_p2_1.data_browser_6.text()) == 4:
+                            #print("Student successfully added!")
+                            date0 = self.ui_p2_1.data_browser_0.text() # date
+                            time1 = self.ui_p2_1.data_browser_1.text() # time
+                            mySID = self.ui_p2_1.data_browser_5.text() + '#' + self.ui_p2_1.data_browser_6.text() # mySID
+                            first_name3 = self.ui_p2_1.data_browser_3.text() # first_name
+                            last_name4 = self.ui_p2_1.data_browser_4.text() # last_name
+                            discord_handle5 = self.ui_p2_1.data_browser_5.text() # discord_handle
+                            discord_tag6 = self.ui_p2_1.data_browser_6.text() # discord_tag
+                            subject7 = self.ui_p2_1.data_browser_7.text() # subject
+                            
+                            datawrite.write_student_data(mySID, first_name3, last_name4, discord_handle5, discord_tag6, subject7, date0, time1)
+                            datawrite.add_student_local()   # Adds student to the table "local"
+                            datawrite.student_list()
+                            self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:792; color:#00a800;\">Student successfully added!</span></p></body></html>")
 
-                            if self.ui_p2_1.data_browser_6.text().isnumeric():
-                                if len(self.ui_p2_1.data_browser_6.text()) == 4:
-                                    #print("Student successfully added!")
-                                    date0 = self.ui_p2_1.data_browser_0.text() # date
-                                    time1 = self.ui_p2_1.data_browser_1.text() # time
-                                    myUH2 = self.ui_p2_1.data_browser_2.text() # myUH
-                                    first_name3 = self.ui_p2_1.data_browser_3.text() # first_name
-                                    last_name4 = self.ui_p2_1.data_browser_4.text() # last_name
-                                    discord_handle5 = self.ui_p2_1.data_browser_5.text() # discord_handle
-                                    discord_tag6 = self.ui_p2_1.data_browser_6.text() # discord_tag
-                                    subject7 = self.ui_p2_1.data_browser_7.text() # subject
-                                    
-                                    datawrite.write_student_data(myUH2, first_name3, last_name4, discord_handle5, discord_tag6, subject7, date0, time1)
-                                    datawrite.add_student_local()   # Adds student to the table "local"
-                                    datawrite.student_list()
-                                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:792; color:#00a800;\">Student successfully added!</span></p></body></html>")
+                            self.current_students()
 
-                                    self.current_students()
+                            self.Form_P2_1.hide()
+                            self.Form_P2.show()
 
-                                    self.Form_P2_1.hide()
-                                    self.Form_P2.show()
-
-                                else:
-                                    # "Student Discord tag must be 4 digits."
-                                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be 4 digits.</span></p></body></html>")
-                            else:
-                                # "Student Discord tag must be numeric."
-                                self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be numeric.</span></p></body></html>")
                         else:
-                            # "Student Discord tag required."
-                            self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag required.</span></p></body></html>")
+                            # "Student Discord tag must be 4 digits."
+                            self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be 4 digits.</span></p></body></html>")
                     else:
-                        # "Student Discord required."
-                        self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord required.</span></p></body></html>")
+                        # "Student Discord tag must be numeric."
+                        self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be numeric.</span></p></body></html>")
                 else:
-                    # print("myUH ID must be numeric.")
-                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be numeric.</span></p></body></html>")
+                    # "Student Discord tag required."
+                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag required.</span></p></body></html>")
             else:
-                # print("myUH ID must be 7 digits.")
-                self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be 7 digits.</span></p></body></html>")
+                # "Student Discord required."
+                self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord required.</span></p></body></html>")
         else:
             # print("Student already exists!")
             self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student already exists!</span></p></body></html>")
@@ -208,7 +192,6 @@ class Page1(Ui_MainWindow):
         self.ui_p2_0 = Ui_Form_P2_0()
         self.ui_p2_0.setupUi(self.Form_P2_0)
 
-        self.ui_p2_0.lineEdit_0.setText(self.myUH)
         self.ui_p2_0.lineEdit_1.setText(self.first_name)
         self.ui_p2_0.lineEdit_2.setText(self.last_name)
         self.ui_p2_0.lineEdit_3.setText(self.discord_handle)
@@ -230,42 +213,35 @@ class Page1(Ui_MainWindow):
         self.Form_P2.show()
 
     def update_tutor_info(self):                    # [COMPLETE]
-        if self.ui_p2_0.lineEdit_0.text() != '' and self.ui_p2_0.lineEdit_1.text() != '' and self.ui_p2_0.lineEdit_2.text() != '' and self.ui_p2_0.lineEdit_3.text() != '' and self.ui_p2_0.lineEdit_4.text() != '':
-            if len(self.ui_p2_0.lineEdit_0.text()) == 7:
-                if self.ui_p2_0.lineEdit_0.text().isnumeric():
-                    if self.ui_p2_0.lineEdit_1.text().isalpha() and self.ui_p2_0.lineEdit_2.text().isalpha():
-                        if self.ui_p2_0.lineEdit_4.text().isnumeric():
-                            if len(self.ui_p2_0.lineEdit_4.text()) == 4:
-                                self.new_myUH = self.ui_p2_0.lineEdit_0.text()
-                                self.new_first_name = self.ui_p2_0.lineEdit_1.text()
-                                self.new_last_name = self.ui_p2_0.lineEdit_2.text()
-                                self.new_discord_handle = self.ui_p2_0.lineEdit_3.text()
-                                self.new_discord_tag = self.ui_p2_0.lineEdit_4.text()
-                                self.date_updated = strfdate()
-                                self.time_updated = strftime()
+        if self.ui_p2_0.lineEdit_1.text() != '' and self.ui_p2_0.lineEdit_2.text() != '' and self.ui_p2_0.lineEdit_3.text() != '' and self.ui_p2_0.lineEdit_4.text() != '':
+            if self.ui_p2_0.lineEdit_1.text().isalpha() and self.ui_p2_0.lineEdit_2.text().isalpha():
+                if self.ui_p2_0.lineEdit_4.text().isnumeric():
+                    if len(self.ui_p2_0.lineEdit_4.text()) == 4:
+                        self.new_first_name = self.ui_p2_0.lineEdit_1.text()
+                        self.new_last_name = self.ui_p2_0.lineEdit_2.text()
+                        self.new_discord_handle = self.ui_p2_0.lineEdit_3.text()
+                        self.new_discord_tag = self.ui_p2_0.lineEdit_4.text()
+                        self.date_updated = strfdate()
+                        self.time_updated = strftime()
 
-                                cursor.execute("""
-                                    UPDATE tutor
-                                    SET (myUH, first_name, last_name, discord_handle, discord_tag, date_updated, time_updated)
-                                    = ('%s','%s','%s','%s','%s', '%s', '%s')
-                                    WHERE ROWID = '1'
-                                """ % (self.new_myUH, self.new_first_name, self.new_last_name, self.new_discord_handle, self.new_discord_tag, self.date_updated, self.time_updated))
-                                con.commit()
+                        cursor.execute("""
+                            UPDATE tutor
+                            SET (first_name, last_name, discord_handle, discord_tag, date_updated, time_updated)
+                            = ('%s','%s','%s','%s', '%s', '%s')
+                            WHERE ROWID = '1'
+                        """ % (self.new_first_name, self.new_last_name, self.new_discord_handle, self.new_discord_tag, self.date_updated, self.time_updated))
+                        con.commit()
 
-                                self.tutor_info()
-                                self.Form_P2_0.hide()
-                                self.Form_P2.show()
+                        self.tutor_info()
+                        self.Form_P2_0.hide()
+                        self.Form_P2.show()
 
-                            else:
-                                self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be 4 digits.</span></p></body></html>")
-                        else:
-                            self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be numeric.</span></p></body></html>")
                     else:
-                        self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Name must be alphabetical.</span></p></body></html>")
+                        self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be 4 digits.</span></p></body></html>")
                 else:
-                    self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be numeric.</span></p></body></html>")
+                    self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Discord tag must be numeric.</span></p></body></html>")
             else:
-                self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">myUH ID must be 7 digits.</span></p></body></html>")
+                self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Name must be alphabetical.</span></p></body></html>")
         else:
             self.ui_p2_0.alert_info_error.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">All fields required.</span></p></body></html>")
 
@@ -275,16 +251,16 @@ class Page1(Ui_MainWindow):
         self.ui_p3.setupUi(self.Form_P3)
 
         self.selected_student = self.ui_p2.listWidget.currentItem().text()
-        self.selected_student_myUH = self.selected_student[:7] # Will help get the info from student database
+        self.selected_student_mySID = self.selected_student # Will help get the info from student database
 
         cursor.execute("""
             SELECT * FROM students
-            WHERE myUH = '%s'
-        """ % self.selected_student_myUH)
+            WHERE mySID = '%s'
+        """ % self.selected_student_mySID)
 
         self.selected_student_info = cursor.fetchall()
         self.student_id = self.selected_student_info[0][0] 
-        self.student_myUH = self.selected_student_info[0][1]
+        self.student_mySID = self.selected_student_info[0][1]
         self.student_first_name = self.selected_student_info[0][2]
         self.student_last_name = self.selected_student_info[0][3]
         self.student_discord_handle = self.selected_student_info[0][4]
@@ -295,7 +271,6 @@ class Page1(Ui_MainWindow):
 
         self.ui_p3.data_browser_0.setText(self.student_date_joined)
         self.ui_p3.data_browser_1.setText(self.student_time_joined)
-        self.ui_p3.data_browser_2.setText(self.student_myUH)
         self.ui_p3.data_browser_3.setText(self.student_first_name)
         self.ui_p3.data_browser_4.setText(self.student_last_name)
         self.ui_p3.data_browser_5.setText(self.student_discord_handle)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './WidgetP2.ui'
+# Form implementation generated from reading ui file './WidgetP2v2.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -19,22 +19,19 @@ class Ui_Form_P2(object):
         self.listWidget.setGeometry(QtCore.QRect(140, 10, 251, 241))
         self.listWidget.setObjectName("listWidget")
         self.tutorFirstName = QtWidgets.QLabel(Form)
-        self.tutorFirstName.setGeometry(QtCore.QRect(40, 80, 61, 21))
+        self.tutorFirstName.setGeometry(QtCore.QRect(40, 40, 61, 21))
         self.tutorFirstName.setObjectName("tutorFirstName")
         self.tutorLastName = QtWidgets.QLabel(Form)
-        self.tutorLastName.setGeometry(QtCore.QRect(40, 120, 61, 21))
+        self.tutorLastName.setGeometry(QtCore.QRect(40, 80, 61, 21))
         self.tutorLastName.setObjectName("tutorLastName")
-        self.tutormyUHID = QtWidgets.QLabel(Form)
-        self.tutormyUHID.setGeometry(QtCore.QRect(40, 40, 61, 21))
-        self.tutormyUHID.setObjectName("tutormyUHID")
         self.tutorDiscordHandle = QtWidgets.QLabel(Form)
-        self.tutorDiscordHandle.setGeometry(QtCore.QRect(20, 160, 101, 21))
+        self.tutorDiscordHandle.setGeometry(QtCore.QRect(20, 120, 101, 21))
         self.tutorDiscordHandle.setObjectName("tutorDiscordHandle")
         self.tutorDiscordTag = QtWidgets.QLabel(Form)
-        self.tutorDiscordTag.setGeometry(QtCore.QRect(50, 200, 41, 21))
+        self.tutorDiscordTag.setGeometry(QtCore.QRect(50, 160, 41, 21))
         self.tutorDiscordTag.setObjectName("tutorDiscordTag")
         self.tutorDiscordHashTag = QtWidgets.QLabel(Form)
-        self.tutorDiscordHashTag.setGeometry(QtCore.QRect(40, 200, 16, 21))
+        self.tutorDiscordHashTag.setGeometry(QtCore.QRect(40, 160, 16, 21))
         self.tutorDiscordHashTag.setObjectName("tutorDiscordHashTag")
         self.alert_file_exists = QtWidgets.QLabel(Form)
         self.alert_file_exists.setGeometry(QtCore.QRect(140, 270, 251, 20))
@@ -58,11 +55,9 @@ class Ui_Form_P2(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Cougar-Log"))
+        Form.setWindowTitle(_translate("Form", "Form"))
         self.tutorFirstName.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorLastName.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
-        self.tutormyUHID.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorDiscordHandle.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorDiscordTag.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorDiscordHashTag.setText(_translate("Form", "<html><head/><body><p>#</p></body></html>"))
-

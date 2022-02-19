@@ -15,9 +15,9 @@ class ListRefresh:
     def  __init__(self):
         pass
 
-    def write_student_data(self, MYUH, FIRST, LAST, HANDLE, TAG, SUBJECT, DATE, TIME):
-        cursor.execute("""insert into students ('myUH','first_name','last_name','discord_handle','discord_tag','subject','date','time')
-        values ('%s','%s','%s','%s','%s','%s','%s','%s')""" % (MYUH, FIRST, LAST, HANDLE, TAG, SUBJECT, DATE, TIME))
+    def write_student_data(self, MYSID, FIRST, LAST, HANDLE, TAG, SUBJECT, DATE, TIME):
+        cursor.execute("""insert into students ('mySID','first_name','last_name','discord_handle','discord_tag','subject','date','time')
+        values ('%s','%s','%s','%s','%s','%s','%s','%s')""" % (MYSID, FIRST, LAST, HANDLE, TAG, SUBJECT, DATE, TIME))
         con.commit()
 
     def add_student_local(self):   
