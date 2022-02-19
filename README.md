@@ -30,7 +30,7 @@ source firstrun
 
 The program opens with an information page tutors need to fill out. This will be used to conveniently produce the logs that are submitted in the CougarCS Tutoring "logging" channel. 
 
-Once submitted, the next page is where new students are added. To add a student, click the "+" (icon) button at the bottom of the page. A separate page will appear with text boxes for Date, Time, myUH ID, First, Last, Handle (Discord), Tag (Discord), and Subject. Out of these, only myUH ID, Handle, and Tag are required.
+Once submitted, the next page is where new students are added. To add a student, click the "+" (icon) button at the bottom of the page. A separate page will appear with text boxes for Date, Time, First, Last, Handle (Discord), Tag (Discord), and Subject. Out of these, only Handle and Tag are required.
 
 Once added, the previous page will reappear with the newly added student's Discord handle in the window. Next, double click the student's handle to open the logging page. To add a log, click the "+" button at the bottom of the page. This will automatically create a log with the start time shown in the window. To add an end time and other information, double click the start time to open the log edit page.
 
