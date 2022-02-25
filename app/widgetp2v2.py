@@ -19,10 +19,10 @@ class Ui_Form_P2(object):
         self.listWidget.setGeometry(QtCore.QRect(140, 10, 251, 241))
         self.listWidget.setObjectName("listWidget")
         self.tutorFirstName = QtWidgets.QLabel(Form)
-        self.tutorFirstName.setGeometry(QtCore.QRect(40, 40, 61, 21))
+        self.tutorFirstName.setGeometry(QtCore.QRect(20, 40, 101, 21))
         self.tutorFirstName.setObjectName("tutorFirstName")
         self.tutorLastName = QtWidgets.QLabel(Form)
-        self.tutorLastName.setGeometry(QtCore.QRect(40, 80, 61, 21))
+        self.tutorLastName.setGeometry(QtCore.QRect(20, 80, 101, 21))
         self.tutorLastName.setObjectName("tutorLastName")
         self.tutorDiscordHandle = QtWidgets.QLabel(Form)
         self.tutorDiscordHandle.setGeometry(QtCore.QRect(20, 120, 101, 21))
@@ -55,7 +55,7 @@ class Ui_Form_P2(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Cougar-Log"))
         self.tutorFirstName.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorLastName.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
         self.tutorDiscordHandle.setText(_translate("Form", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))

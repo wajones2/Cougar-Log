@@ -123,5 +123,5 @@ class Ui_Form_P5(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Cougar-Log"))
         self.label.setText(_translate("Form", "<html><head/><body><p align=\"center\">Log Notes</p></body></html>"))

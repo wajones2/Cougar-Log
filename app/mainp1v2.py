@@ -79,7 +79,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Cougar-Log"))
         self.label_4.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Discord Handle:</span></p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p>First Name:</p></body></html>"))
         self.form_title.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">Tutor Information</span></p></body></html>"))

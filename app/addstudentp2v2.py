@@ -82,7 +82,7 @@ class Ui_Form_P2_1(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("Form", "Cougar-Log"))
         self.label_06.setText(_translate("Form", "Tag:"))
         self.label_04.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Last:</span></p></body></html>"))
         self.label_00.setText(_translate("Form", "<html><head/><body><p><span style=\" font-size:12pt;\">Date:</span></p></body></html>"))

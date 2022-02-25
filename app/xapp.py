@@ -82,10 +82,10 @@ class Page1(Ui_MainWindow):
         self.discord_handle = self.tutor[0][3]
         self.discord_tag = self.tutor[0][4]
 
-        self.ui_p2.tutorFirstName.setText(self.first_name)
-        self.ui_p2.tutorLastName.setText(self.last_name)
-        self.ui_p2.tutorDiscordHandle.setText(self.discord_handle)
-        self.ui_p2.tutorDiscordTag.setText(self.discord_tag)
+        self.ui_p2.tutorFirstName.setText(f"<html><head/><body><p align=\"center\"><span style=\" \">{self.first_name}</span></p></body></html>")
+        self.ui_p2.tutorLastName.setText(f"<html><head/><body><p align=\"center\"><span style=\" \">{self.last_name}</span></p></body></html>")
+        self.ui_p2.tutorDiscordHandle.setText(f"<html><head/><body><p align=\"center\"><span style=\" \">{self.discord_handle}</span></p></body></html>")
+        self.ui_p2.tutorDiscordTag.setText(f"<html><head/><body><p align=\"center\"><span style=\" \">{self.discord_tag}</span></p></body></html>")
 
     def current_students(self):                     # [COMPLETE]
         self.studentNum = len(datawrite.student_check)
