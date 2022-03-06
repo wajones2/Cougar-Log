@@ -116,7 +116,7 @@ class Page1(Ui_MainWindow):
         self.tutor_info()
 
         MainWindow.hide()
-        self.Form_P2.show()    # Submit button opens page 2
+        self.Form_P2.show()    # Submit button opens page 2  [xtutor]
         
     def page2_1(self):                              # [COMPLETE]
         self.Form_P2_1 = QtWidgets.QWidget()
@@ -143,46 +143,53 @@ class Page1(Ui_MainWindow):
 
     def add_student(self):                          # [COMPLETE]
 
-        # new_student_id = self.ui_p2_1.data_browser_2.text()     # Why is this the only defined data browser variable?
-        new_student_id = self.ui_p2_1.data_browser_5.text() + '#' + self.ui_p2_1.data_browser_6.text()
+        # sqlite_sequence always adds + 1 to the rowid even if the most recent is deleted. It keeps track of the total number of inserts.
+
+        cursor.execute("""
+            SELECT * FROM sqlite_sequence       
+        """)
+        student_count = cursor.fetchall()
+
+        if ('students' in [stud[0] for stud in student_count]) == True: # Note: the parentheses are required or else the output is always False
+            new_student_rowid = student_count[2][1] + 1
+        else:
+            new_student_rowid = 1
+
+
+        new_student_id = self.ui_p2_1.data_browser_3.text() + str(new_student_rowid)
 
         if new_student_id not in [str(ID[1]) for ID in datawrite.student_check]:    # student_check imported from newstudentdb                                           
-            if self.ui_p2_1.data_browser_5.text() != '':
-                if self.ui_p2_1.data_browser_6.text() != '':
-                    if self.ui_p2_1.data_browser_6.text().isnumeric():
-                        if len(self.ui_p2_1.data_browser_6.text()) == 4:
-                            #print("Student successfully added!")
-                            date0 = self.ui_p2_1.data_browser_0.text() # date
-                            time1 = self.ui_p2_1.data_browser_1.text() # time
-                            mySID = self.ui_p2_1.data_browser_5.text() + '#' + self.ui_p2_1.data_browser_6.text() # mySID
-                            first_name3 = self.ui_p2_1.data_browser_3.text() # first_name
-                            last_name4 = self.ui_p2_1.data_browser_4.text() # last_name
-                            discord_handle5 = self.ui_p2_1.data_browser_5.text() # discord_handle
-                            discord_tag6 = self.ui_p2_1.data_browser_6.text() # discord_tag
-                            subject7 = self.ui_p2_1.data_browser_7.text() # subject
-                            
-                            datawrite.write_student_data(mySID, first_name3, last_name4, discord_handle5, discord_tag6, subject7, date0, time1)
-                            datawrite.add_student_local()   # Adds student to the table "local"
-                            datawrite.student_list()
-                            self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:792; color:#00a800;\">Student successfully added!</span></p></body></html>")
+            if self.ui_p2_1.data_browser_3.text() != '':
+                if self.ui_p2_1.data_browser_3.text().isalpha():
+                
+                    #print("Student successfully added!")
+                    date0 = self.ui_p2_1.data_browser_0.text() # date
+                    time1 = self.ui_p2_1.data_browser_1.text() # time
+                    # mySID = self.ui_p2_1.data_browser_5.text() + '#' + self.ui_p2_1.data_browser_6.text() # mySID
+                    # mySID = max([ID[0] for ID in datawrite.student_check]) + 1
+                    mySID = self.ui_p2_1.data_browser_3.text() + str(new_student_rowid)
+                    first_name3 = self.ui_p2_1.data_browser_3.text() # first_name   Now the only input required in v2
+                    last_name4 = self.ui_p2_1.data_browser_4.text() # last_name
+                    discord_handle5 = self.ui_p2_1.data_browser_5.text() # discord_handle
+                    discord_tag6 = self.ui_p2_1.data_browser_6.text() # discord_tag
+                    subject7 = self.ui_p2_1.data_browser_7.text() # subject
+                    
+                    datawrite.write_student_data(mySID, first_name3, last_name4, discord_handle5, discord_tag6, subject7, date0, time1)
+                    datawrite.add_student_local()   # Adds student to the table "local"
+                    datawrite.student_list()
+                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:792; color:#00a800;\">Student successfully added!</span></p></body></html>")
 
-                            self.current_students()
+                    self.current_students()
 
-                            self.Form_P2_1.hide()
-                            self.Form_P2.show()
+                    self.Form_P2_1.hide()
+                    self.Form_P2.show()
 
-                        else:
-                            # "Student Discord tag must be 4 digits."
-                            self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be 4 digits.</span></p></body></html>")
-                    else:
-                        # "Student Discord tag must be numeric."
-                        self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag must be numeric.</span></p></body></html>")
                 else:
-                    # "Student Discord tag required."
-                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord tag required.</span></p></body></html>")
+                    # "Student first name must be alphabetical."
+                    self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student first name must be alphabetical.</span></p></body></html>")
             else:
-                # "Student Discord required."
-                self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student Discord required.</span></p></body></html>")
+                # "Student first name required."
+                self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student first name required.</span></p></body></html>")
         else:
             # print("Student already exists!")
             self.ui_p2_1.alert_file_exists.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;color:#fc0107;\">Student already exists!</span></p></body></html>")
@@ -318,7 +325,7 @@ class Page1(Ui_MainWindow):
         self.last_student_log()
         self.show_student_logs()
 
-    def new_log(self):                              # [COMPLETE]
+    def new_log(self):                              # [NEED TO EDIT DISCORD INPUTS]
 
         self.Form_P4 = QtWidgets.QWidget()
         self.ui_p4 = Ui_Form_P4()
@@ -476,11 +483,8 @@ class Page1(Ui_MainWindow):
     def calculate_time(self):                       # [COMPLETE]
 
         tl.calculate(self.ui_p4.dateP4.text(),self.ui_p4.startTime.text()[:-3],self.ui_p4.endTime.text()[:-3])
+        self.ui_p4.totalTime.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;\">%s hr %s min</span></p></body></html>" % (tl.total[0], tl.total[1]))
 
-        if str(tl.hqty[0])[0] == '-':
-            tl.hqty[0] += 12
-
-        self.ui_p4.totalTime.setText("<html><head/><body><p align=\"center\"><span style=\" font-weight:800;\">%s hr %s min</span></p></body></html>" % (tl.hqty[0], tl.hqty[1]))
 
     def update_total_time(self):                    # [COMPLETE]
 
